@@ -1,0 +1,7 @@
+<div class="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-200">
+  @if (authService.isAuthenticated()) {
+    <app-header />
+  }
+  <router-outlet />
+  <app-toast />
+</div>
