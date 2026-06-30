@@ -91,7 +91,9 @@ export class FlashcardsService {
       throw new ForbiddenException('Access denied');
     }
 
-    const maxPosition = await this.flashcardsRepository.maximum('position', { deckId });
+    const maxPosition = await this.flashcardsRepository.maximum('position', {
+      deckId,
+    });
 
     const flashcards = dto.cards.map((card, index) =>
       this.flashcardsRepository.create({

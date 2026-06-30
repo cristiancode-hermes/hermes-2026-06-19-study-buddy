@@ -10,7 +10,12 @@ import {
   UseGuards,
   ParseIntPipe,
 } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { DecksService } from './decks.service';
 import { CreateDeckDto } from './dto/create-deck.dto';
 import { UpdateDeckDto } from './dto/update-deck.dto';
@@ -45,10 +50,7 @@ export class DecksController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new deck' })
-  async create(
-    @Body() dto: CreateDeckDto,
-    @CurrentUser('id') userId: number,
-  ) {
+  async create(@Body() dto: CreateDeckDto, @CurrentUser('id') userId: number) {
     return this.decksService.create(dto, userId);
   }
 

@@ -34,20 +34,18 @@ export class DashboardService {
       .innerJoin('f.deck', 'd', 'd.userId = :userId', { userId })
       .innerJoin('f.reviews', 'r', 'r.userId = :userId')
       .where('r.nextReview <= :today', { today })
-      .andWhere(
-        (qb) => {
-          const subQuery = qb
-            .subQuery()
-            .select('sr.id')
-            .from(StudyReview, 'sr')
-            .where('sr.flashcardId = f.id')
-            .andWhere('sr.userId = :userId')
-            .orderBy('sr.id', 'DESC')
-            .limit(1)
-            .getQuery();
-          return 'r.id = ' + subQuery;
-        },
-      )
+      .andWhere((qb) => {
+        const subQuery = qb
+          .subQuery()
+          .select('sr.id')
+          .from(StudyReview, 'sr')
+          .where('sr.flashcardId = f.id')
+          .andWhere('sr.userId = :userId')
+          .orderBy('sr.id', 'DESC')
+          .limit(1)
+          .getQuery();
+        return 'r.id = ' + subQuery;
+      })
       .getCount();
 
     // Streak calculation
@@ -58,8 +56,8 @@ export class DashboardService {
 
     const reviewDates = [
       ...new Set(
-        allReviews.map((r) =>
-          new Date(r.reviewedAt).toISOString().split('T')[0],
+        allReviews.map(
+          (r) => new Date(r.reviewedAt).toISOString().split('T')[0],
         ),
       ),
     ].sort((a, b) => b.localeCompare(a));
@@ -95,20 +93,18 @@ export class DashboardService {
           .innerJoin('f.reviews', 'r', 'r.userId = :userId', { userId })
           .where('f.deckId = :deckId', { deckId: deck.id })
           .andWhere('r.nextReview <= :today', { today })
-          .andWhere(
-            (qb) => {
-              const subQuery = qb
-                .subQuery()
-                .select('sr.id')
-                .from(StudyReview, 'sr')
-                .where('sr.flashcardId = f.id')
-                .andWhere('sr.userId = :userId')
-                .orderBy('sr.id', 'DESC')
-                .limit(1)
-                .getQuery();
-              return 'r.id = ' + subQuery;
-            },
-          )
+          .andWhere((qb) => {
+            const subQuery = qb
+              .subQuery()
+              .select('sr.id')
+              .from(StudyReview, 'sr')
+              .where('sr.flashcardId = f.id')
+              .andWhere('sr.userId = :userId')
+              .orderBy('sr.id', 'DESC')
+              .limit(1)
+              .getQuery();
+            return 'r.id = ' + subQuery;
+          })
           .getCount();
 
         return {

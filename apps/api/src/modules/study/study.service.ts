@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StudyReview } from './study-review.entity';
@@ -33,20 +37,18 @@ export class StudyService {
       .createQueryBuilder('f')
       .leftJoinAndSelect('f.reviews', 'r', 'r.userId = :userId', { userId })
       .where('f.deckId = :deckId', { deckId })
-      .andWhere(
-        qb => {
-          const subQuery = qb
-            .subQuery()
-            .select('sr.id')
-            .from(StudyReview, 'sr')
-            .where('sr.flashcardId = f.id')
-            .andWhere('sr.userId = :userId')
-            .orderBy('sr.id', 'DESC')
-            .limit(1)
-            .getQuery();
-          return 'r.id = ' + subQuery;
-        },
-      )
+      .andWhere((qb) => {
+        const subQuery = qb
+          .subQuery()
+          .select('sr.id')
+          .from(StudyReview, 'sr')
+          .where('sr.flashcardId = f.id')
+          .andWhere('sr.userId = :userId')
+          .orderBy('sr.id', 'DESC')
+          .limit(1)
+          .getQuery();
+        return 'r.id = ' + subQuery;
+      })
       .andWhere('r.nextReview <= :today', { today })
       .orderBy('r.nextReview', 'ASC')
       .getMany();
@@ -83,7 +85,7 @@ export class StudyService {
     });
 
     // SM-2 Algorithm
-    let { interval, repetitions, easeFactor } = this.computeSM2(
+    const { interval, repetitions, easeFactor } = this.computeSM2(
       lastReview?.interval ?? 0,
       lastReview?.repetitions ?? 0,
       lastReview?.easeFactor ?? 2.5,
@@ -127,7 +129,9 @@ export class StudyService {
     // Calculate streak (consecutive days with at least one review)
     const reviewDates = [
       ...new Set(
-        allReviews.map((r) => new Date(r.reviewedAt).toISOString().split('T')[0]),
+        allReviews.map(
+          (r) => new Date(r.reviewedAt).toISOString().split('T')[0],
+        ),
       ),
     ].sort((a, b) => b.localeCompare(a));
 
@@ -150,7 +154,8 @@ export class StudyService {
       correct,
       incorrect,
       streak,
-      accuracy: totalReviewed > 0 ? Math.round((correct / totalReviewed) * 100) : 0,
+      accuracy:
+        totalReviewed > 0 ? Math.round((correct / totalReviewed) * 100) : 0,
     };
   }
 

@@ -73,43 +73,100 @@ export class SeedService {
 
     // Create flashcards for deck1 (JavaScript)
     const jsCards = [
-      { front: 'What is closure in JavaScript?', back: 'A function that has access to its outer function scope even after the outer function has returned.' },
-      { front: 'What is the difference between == and ===?', back: '== compares values with type coercion; === compares values and types without coercion.' },
-      { front: 'What is hoisting?', back: 'JavaScript behavior where variable and function declarations are moved to the top of their scope before code execution.' },
-      { front: 'What is a Promise?', back: 'An object representing the eventual completion or failure of an asynchronous operation.' },
-      { front: 'What is the event loop?', back: 'A mechanism that handles asynchronous callbacks by checking the call stack and task queue.' },
+      {
+        front: 'What is closure in JavaScript?',
+        back: 'A function that has access to its outer function scope even after the outer function has returned.',
+      },
+      {
+        front: 'What is the difference between == and ===?',
+        back: '== compares values with type coercion; === compares values and types without coercion.',
+      },
+      {
+        front: 'What is hoisting?',
+        back: 'JavaScript behavior where variable and function declarations are moved to the top of their scope before code execution.',
+      },
+      {
+        front: 'What is a Promise?',
+        back: 'An object representing the eventual completion or failure of an asynchronous operation.',
+      },
+      {
+        front: 'What is the event loop?',
+        back: 'A mechanism that handles asynchronous callbacks by checking the call stack and task queue.',
+      },
     ];
     for (let i = 0; i < jsCards.length; i++) {
       await this.flashcardsRepository.save(
-        this.flashcardsRepository.create({ deckId: deck1.id, ...jsCards[i], position: i }),
+        this.flashcardsRepository.create({
+          deckId: deck1.id,
+          ...jsCards[i],
+          position: i,
+        }),
       );
     }
 
     // Create flashcards for deck2 (DSA)
     const dsaCards = [
-      { front: 'What is Big O notation?', back: 'A mathematical notation describing the limiting behavior of a function when the argument tends toward infinity.' },
-      { front: 'What is a linked list?', back: 'A linear data structure where elements are stored in nodes that point to the next node.' },
-      { front: 'What is a binary search tree?', back: 'A tree data structure where each node has at most 2 children, with left < parent < right.' },
-      { front: 'What is dynamic programming?', back: 'A method for solving complex problems by breaking them down into simpler subproblems.' },
-      { front: 'What is a hash table?', back: 'A data structure that maps keys to values using a hash function for O(1) average lookup.' },
+      {
+        front: 'What is Big O notation?',
+        back: 'A mathematical notation describing the limiting behavior of a function when the argument tends toward infinity.',
+      },
+      {
+        front: 'What is a linked list?',
+        back: 'A linear data structure where elements are stored in nodes that point to the next node.',
+      },
+      {
+        front: 'What is a binary search tree?',
+        back: 'A tree data structure where each node has at most 2 children, with left < parent < right.',
+      },
+      {
+        front: 'What is dynamic programming?',
+        back: 'A method for solving complex problems by breaking them down into simpler subproblems.',
+      },
+      {
+        front: 'What is a hash table?',
+        back: 'A data structure that maps keys to values using a hash function for O(1) average lookup.',
+      },
     ];
     for (let i = 0; i < dsaCards.length; i++) {
       await this.flashcardsRepository.save(
-        this.flashcardsRepository.create({ deckId: deck2.id, ...dsaCards[i], position: i }),
+        this.flashcardsRepository.create({
+          deckId: deck2.id,
+          ...dsaCards[i],
+          position: i,
+        }),
       );
     }
 
     // Create flashcards for deck3 (TypeScript)
     const tsCards = [
-      { front: 'What is an interface in TypeScript?', back: 'A way to define the shape of an object, specifying property names and their types.' },
-      { front: 'What is a generic?', back: 'A way to create reusable components that work with a variety of types rather than a single one.' },
-      { front: 'What is the difference between any and unknown?', back: 'any bypasses type checking; unknown requires type assertion before use.' },
-      { front: 'What is a type guard?', back: 'A runtime check that ensures a variable is of a specific type within a conditional block.' },
-      { front: 'What are union and intersection types?', back: 'Union (|) allows a value to be one of several types; Intersection (&) combines multiple types into one.' },
+      {
+        front: 'What is an interface in TypeScript?',
+        back: 'A way to define the shape of an object, specifying property names and their types.',
+      },
+      {
+        front: 'What is a generic?',
+        back: 'A way to create reusable components that work with a variety of types rather than a single one.',
+      },
+      {
+        front: 'What is the difference between any and unknown?',
+        back: 'any bypasses type checking; unknown requires type assertion before use.',
+      },
+      {
+        front: 'What is a type guard?',
+        back: 'A runtime check that ensures a variable is of a specific type within a conditional block.',
+      },
+      {
+        front: 'What are union and intersection types?',
+        back: 'Union (|) allows a value to be one of several types; Intersection (&) combines multiple types into one.',
+      },
     ];
     for (let i = 0; i < tsCards.length; i++) {
       await this.flashcardsRepository.save(
-        this.flashcardsRepository.create({ deckId: deck3.id, ...tsCards[i], position: i }),
+        this.flashcardsRepository.create({
+          deckId: deck3.id,
+          ...tsCards[i],
+          position: i,
+        }),
       );
     }
 
@@ -120,7 +177,9 @@ export class SeedService {
     const threeDaysAgo = new Date(today);
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
 
-    const jsFlashcards = await this.flashcardsRepository.find({ where: { deckId: deck1.id } });
+    const jsFlashcards = await this.flashcardsRepository.find({
+      where: { deckId: deck1.id },
+    });
 
     // Create reviews with varying quality to demonstrate SM-2
     if (jsFlashcards.length >= 3) {
@@ -133,7 +192,9 @@ export class SeedService {
           easeFactor: 2.6,
           interval: 6,
           repetitions: 2,
-          nextReview: new Date(today.getTime() + 6 * 86400000).toISOString().split('T')[0],
+          nextReview: new Date(today.getTime() + 6 * 86400000)
+            .toISOString()
+            .split('T')[0],
           reviewedAt: yesterday,
         }),
       );
@@ -168,7 +229,9 @@ export class SeedService {
     }
 
     this.logger.log('Database seeded successfully!');
-    this.logger.log(`Created ${2} users, ${3} decks, ${jsCards.length + dsaCards.length + tsCards.length} flashcards`);
+    this.logger.log(
+      `Created ${2} users, ${3} decks, ${jsCards.length + dsaCards.length + tsCards.length} flashcards`,
+    );
     this.logger.log('Demo accounts:');
     this.logger.log('  test@test.com / password123');
     this.logger.log('  student@test.com / password123');

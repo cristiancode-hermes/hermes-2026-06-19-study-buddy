@@ -21,7 +21,9 @@ export class AiService {
     );
   }
 
-  async generateFlashcards(text: string): Promise<{ front: string; back: string }[]> {
+  async generateFlashcards(
+    text: string,
+  ): Promise<{ front: string; back: string }[]> {
     return this.strategy.generateFlashcards(text);
   }
 

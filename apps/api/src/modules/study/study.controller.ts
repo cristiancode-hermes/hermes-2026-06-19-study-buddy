@@ -31,10 +31,7 @@ export class StudyController {
 
   @Post('rate')
   @ApiOperation({ summary: 'Rate a flashcard after review (SM-2 algorithm)' })
-  async rate(
-    @Body() dto: RateCardDto,
-    @CurrentUser('id') userId: number,
-  ) {
+  async rate(@Body() dto: RateCardDto, @CurrentUser('id') userId: number) {
     return this.studyService.rateCard(dto, userId);
   }
 

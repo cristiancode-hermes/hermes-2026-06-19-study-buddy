@@ -8,7 +8,12 @@ import {
   UseGuards,
   ParseIntPipe,
 } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { QuizService } from './quiz.service';
 import { SubmitQuizDto } from './dto/submit-quiz.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -29,7 +34,11 @@ export class QuizController {
     @Query('count') count: string,
     @CurrentUser('id') userId: number,
   ) {
-    return this.quizService.generateQuiz(deckId, userId, count ? parseInt(count, 10) : 10);
+    return this.quizService.generateQuiz(
+      deckId,
+      userId,
+      count ? parseInt(count, 10) : 10,
+    );
   }
 
   @Post(':deckId/result')

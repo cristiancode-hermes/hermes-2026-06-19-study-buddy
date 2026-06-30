@@ -13,7 +13,9 @@ export class OpenAIStrategy implements AIStrategy {
     this.apiKey = this.configService.get<string>('OPENAI_API_KEY', '');
   }
 
-  async generateFlashcards(text: string): Promise<{ front: string; back: string }[]> {
+  async generateFlashcards(
+    text: string,
+  ): Promise<{ front: string; back: string }[]> {
     if (!this.apiKey) {
       throw new Error('OpenAI API key not configured');
     }
@@ -36,7 +38,7 @@ Return ONLY valid JSON array, no markdown formatting.`;
         },
         {
           headers: {
-            'Authorization': `Bearer ${this.apiKey}`,
+            Authorization: `Bearer ${this.apiKey}`,
             'Content-Type': 'application/json',
           },
         },
@@ -83,7 +85,7 @@ Return ONLY valid JSON array, no markdown formatting.`;
         },
         {
           headers: {
-            'Authorization': `Bearer ${this.apiKey}`,
+            Authorization: `Bearer ${this.apiKey}`,
             'Content-Type': 'application/json',
           },
         },

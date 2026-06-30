@@ -10,7 +10,8 @@ describe('LocalFallbackStrategy', () => {
 
   describe('generateFlashcards', () => {
     it('should return an array of flashcards from paragraph text', async () => {
-      const text = 'JavaScript is a programming language. It is used for web development.\n\nClosures are an important concept. They allow functions to access outer scope.';
+      const text =
+        'JavaScript is a programming language. It is used for web development.\n\nClosures are an important concept. They allow functions to access outer scope.';
       const cards = await strategy.generateFlashcards(text);
       expect(Array.isArray(cards)).toBe(true);
       expect(cards.length).toBeGreaterThan(0);
@@ -37,7 +38,8 @@ describe('LocalFallbackStrategy', () => {
       // Generate a long text that would produce many cards
       const paragraphs = Array.from(
         { length: 30 },
-        (_, i) => `This is paragraph ${i + 1}. It contains multiple sentences. Each sentence is meaningful.`,
+        (_, i) =>
+          `This is paragraph ${i + 1}. It contains multiple sentences. Each sentence is meaningful.`,
       );
       const text = paragraphs.join('\n\n');
       const cards = await strategy.generateFlashcards(text);
@@ -49,7 +51,10 @@ describe('LocalFallbackStrategy', () => {
     it('should return quiz questions based on flashcards', async () => {
       const flashcards = [
         { front: 'What is JavaScript?', back: 'A programming language' },
-        { front: 'What is a closure?', back: 'A function with access to outer scope' },
+        {
+          front: 'What is a closure?',
+          back: 'A function with access to outer scope',
+        },
         { front: 'What is hoisting?', back: 'Moving declarations to the top' },
         { front: 'What is a Promise?', back: 'Async operation handler' },
       ];

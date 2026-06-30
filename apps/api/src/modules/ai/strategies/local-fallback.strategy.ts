@@ -3,7 +3,9 @@ import { AIStrategy } from './ai-strategy.interface';
 
 @Injectable()
 export class LocalFallbackStrategy implements AIStrategy {
-  async generateFlashcards(text: string): Promise<{ front: string; back: string }[]> {
+  async generateFlashcards(
+    text: string,
+  ): Promise<{ front: string; back: string }[]> {
     const cards: { front: string; back: string }[] = [];
 
     // Split by double newlines (paragraphs)
@@ -78,7 +80,11 @@ export class LocalFallbackStrategy implements AIStrategy {
     flashcards: { front: string; back: string }[],
     count: number,
   ): Promise<{ question: string; options: string[]; correctAnswer: string }[]> {
-    const questions: { question: string; options: string[]; correctAnswer: string }[] = [];
+    const questions: {
+      question: string;
+      options: string[];
+      correctAnswer: string;
+    }[] = [];
 
     // Create MCQ by using one card's answer as correct and others as distractors
     for (let i = 0; i < Math.min(count, flashcards.length); i++) {
@@ -94,7 +100,9 @@ export class LocalFallbackStrategy implements AIStrategy {
       }
 
       // Shuffle options
-      const options = [correctCard.back, ...distractors].sort(() => Math.random() - 0.5);
+      const options = [correctCard.back, ...distractors].sort(
+        () => Math.random() - 0.5,
+      );
 
       questions.push({
         question: correctCard.front,

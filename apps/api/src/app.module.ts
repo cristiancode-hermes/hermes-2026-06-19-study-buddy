@@ -23,7 +23,10 @@ import { AppService } from './app.service';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'better-sqlite3',
-        database: configService.get<string>('DATABASE_URL', './data/study-buddy.db'),
+        database: configService.get<string>(
+          'DATABASE_URL',
+          './data/study-buddy.db',
+        ),
         entities: [__dirname + '/**/*.entity.{ts,js}'],
         synchronize: true,
       }),

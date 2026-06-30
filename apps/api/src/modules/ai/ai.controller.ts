@@ -1,9 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AiService } from './ai.service';
 import { GenerateFlashcardsDto } from './dto/generate-flashcards.dto';
@@ -30,7 +25,8 @@ export class AiController {
   @Post('generate-quiz')
   @ApiOperation({ summary: 'Generate quiz questions from flashcards' })
   async generateQuiz(
-    @Body() body: { flashcards: { front: string; back: string }[]; count?: number },
+    @Body()
+    body: { flashcards: { front: string; back: string }[]; count?: number },
     @CurrentUser('id') _userId: number,
   ) {
     const questions = await this.aiService.generateQuizQuestions(
