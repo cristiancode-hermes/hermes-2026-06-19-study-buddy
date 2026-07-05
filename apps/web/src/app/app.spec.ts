@@ -1,11 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { AuthService } from './services/auth.service';
+import { ToastService } from './services/toast.service';
 import { App } from './app';
 
 describe('App', () => {
+  const mockAuthService = {
+    isAuthenticated: () => false,
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [provideRouter([])],
+      providers: [
+        provideRouter([]),
+        { provide: AuthService, useValue: mockAuthService },
+        ToastService,
+      ],
     }).compileComponents();
   });
 
